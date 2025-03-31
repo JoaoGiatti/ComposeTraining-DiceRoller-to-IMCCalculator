@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -77,6 +78,7 @@ fun ImcApp() {
 fun IMCCalculator(modifier: Modifier = Modifier) {
     var weight by remember {mutableStateOf("")}
     var height by remember {mutableStateOf("")}
+    var imcCategory by remember {mutableStateOf<String?>(null)}
 
     Column(
         modifier = modifier
@@ -86,21 +88,57 @@ fun IMCCalculator(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         TextField(
-
+            value = weight,
+            onValueChange = { newValue ->
+                if (newValue.all { it.isDigit() || it == '.' }) {
+                    weight = newValue
+                }
+            },
+            label = { Text("Peso (kg)") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            singleLine = true
         )
 
-        Spacer()
+        Spacer(modifier = Modifier.height(16.dp))
 
         TextField(
-
+            value = height,
+            onValueChange = { newValue ->
+                if (newValue.all { it.isDigit() || it == '.' }) {
+                    height = newValue
+                }
+            },
+            label = { Text("Altura (m)") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            singleLine = true
         )
 
-        Spacer()
+        Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
+        Button(onClick = {
+            val imc = weight.toFloatOrNull()?.let { w ->
+                height.toFloatOrNull()?.let { h ->
+                    if (h != 0f) w / (h * h) else null
+                }
+            }
+            imcCategory = imc?.let {
+                when {
+                    it < 18.5 -> "Magreza"
+                    it < 25 -> "Normal"
+                    it < 30 -> "Sobrepeso"
+                    else -> "Obesidade"
+            }
+            } ?: "Dados inválidos"
+        }){
+            Text("Calcular IMC")
+        }
 
-        ){
-            text("Calcular IMC")
+        Spacer(modifier = Modifier.height(16.dp))
+
+        imcCategory?.let { category ->
+            Text("Categoria: $category",
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
