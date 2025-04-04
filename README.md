@@ -1,21 +1,30 @@
-Create an interactive dice roller app - Solution Code
-=======================================
+# **Dice Roller - IMC Calculator 📱🎲**
 
-Solution code for the Android Basics with Compose: Create an interactive dice roller app.
+🚀 **Aplicação Android** desenvolvida com **Jetpack Compose** e **Firebase Firestore**, que permite calcular o **Índice de Massa Corporal (IMC)** e armazenar os resultados na nuvem!
 
-Introduction
-------------
-In this codelab, you will build out the Dice Roller app from start to finish using Compose.
+---
 
-Pre-requisites
---------------
+## 📌 Sobre o Projeto
 
-You need to know:
-- How to create a new project in Android Studio
-- How to build a basic layout with Compose.
-- How to write control flow statements (if / else, when statements).
+Este app é baseado no projeto "Dice Roller", mas foi evoluído para incluir um **calculador de IMC**. Ele permite que o usuário:
 
-Getting Started
----------------
+- ✅ Inserir peso e altura para calcular o IMC
+- ✅ Exibir a classificação do IMC (Magreza, Normal, Sobrepeso, Obesidade)
+- ✅ Armazenar os resultados no **Firebase Firestore**
 
-1. Download and run the app.
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Kotlin** 💙
+- **Jetpack Compose** 🎨
+- **Firebase Firestore** 🔥
+- **Android Studio** 🛠️
+
+---
+
+## 📲 Como Executar o Projeto?
+
+### 1️⃣ Clonar o repositório
+```bash
+git clone https://github.com/seu-usuario/dice-roller-imc.git
