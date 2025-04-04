@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "812413377468",
+    "project_id": "imccalc-98b30",
+    "storage_bucket": "imccalc-98b30.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812413377468:android:9bfa5b99a16a6fba08a9b9",
+        "android_client_info": {
+          "package_name": "com.example.diceroller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA7NRs0wrj4l93nvvoiYYUng6k-ZoD45U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

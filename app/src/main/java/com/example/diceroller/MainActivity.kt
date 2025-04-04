@@ -47,27 +47,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diceroller.ui.theme.DiceRollerTheme
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : ComponentActivity() {
+    private val db = FirebaseFirestore.getInstance() //Conexão com o Firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        FirebaseApp.initializeApp(this) //Inicializando o Firebase
+
         setContent {
             DiceRollerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ImcApp()
+                    ImcApp(db) //Passando o Firestore para o componente ImcApp
                 }
             }
         }
     }
 }
 
-@Preview
+
 @Composable
-fun ImcApp() {
+fun ImcApp(db: FirebaseFirestore) {
     IMCCalculator(
+        db = db, //Passando o Firestore para o componente IMCCalculator
         modifier = Modifier
         .fillMaxSize()
         .wrapContentSize(Alignment.Center)
@@ -75,7 +82,7 @@ fun ImcApp() {
 }
 
 @Composable
-fun IMCCalculator(modifier: Modifier = Modifier) {
+fun IMCCalculator(db: FirebaseFirestore, modifier: Modifier = Modifier) {
     var weight by remember {mutableStateOf("")}
     var height by remember {mutableStateOf("")}
     var imcCategory by remember {mutableStateOf<String?>(null)}
@@ -129,6 +136,24 @@ fun IMCCalculator(modifier: Modifier = Modifier) {
                     else -> "Obesidade"
             }
             } ?: "Dados inválidos"
+
+            if(imc != null && imcCategory != "Dados inválidos"){
+                val data = hashMapOf(
+                    "peso" to weight,
+                    "altura" to height,
+                    "imc" to imc,
+                    "categoria" to imcCategory
+                )
+
+                db.collection("imcResultados") //Nome da coleção
+                    .add(data) //Salvar no documento "imcResultados"
+                    .addOnSuccessListener {
+                        println("IMC salvo com sucesso!")
+                    }
+                    .addOnFailureListener { e ->
+                        println("Erro ao salvar IMC: $e")
+                    }
+            }
         }){
             Text("Calcular IMC")
         }
